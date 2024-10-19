@@ -1,0 +1,12 @@
+.info-card {
+  border-radius: 10px;
+  background-color: #d4e5ef;
+  width: 96%;
+  margin-top: 10px;
+  margin-left: 2%;
+  overflow: hidden;
+}
+
+.info-card .text-area {
+  padding: 10px 20px 20px;
+}
