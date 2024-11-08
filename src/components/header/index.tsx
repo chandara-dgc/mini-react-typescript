@@ -14,19 +14,6 @@ function Header() {
     }
   };
 
-  // const getToast = async () => {
-  //   try {
-  //     await callWindVaneHandler("WVUIUICustom", "long", {
-  //       param: {
-  //         message: "Toast information",
-  //         duration: 2,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.error("Navigator closed successfully:", error);
-  //   }
-  // };
-
   const getToast = async () => {
     window.WindVane.call(
       "UICustom",
@@ -43,14 +30,31 @@ function Header() {
   const getCustom = () => {
     var params = { message: "flutter test" };
     window.WindVane.call(
-      "WVShowFlutterView ",
+      "WVShowFlutterView",
       "JSApiTest",
       params,
       function (e: any) {
-        alert("successfully");
+        alert("success: " + JSON.stringify(e));
       },
       function (e: any) {
-        alert("Failed");
+        alert("Failed: " + JSON.stringify(e));
+      }
+    );
+  };
+
+  const handleNavigate = () => {
+    var params = {
+      url: "https://www.alibabacloud.com/help/en/superapp/latest/routing-1?spm=a3c0i.23458820.2359477120.1.35a17d3fH8DNpi",
+    };
+    window.WindVane.call(
+      "WVNavigator",
+      "push",
+      params,
+      function (e: any) {
+      
+      },
+      function (e: any) {
+        alert("failure: " + JSON.stringify(e));
       }
     );
   };
@@ -63,6 +67,7 @@ function Header() {
         <button onClick={getData}>Get data</button>
         <button onClick={getToast}>Get Toast</button>
         <button onClick={getCustom}>Get Custom</button>
+        <button onClick={handleNavigate}>Navigate</button>
       </div>
       {infoUser && <div>{infoUser}</div>}
     </div>

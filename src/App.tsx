@@ -1,38 +1,34 @@
-import './App.css';
-import Header from "./components/header";
-import InfoBody from "./components/infoBody";
-import Footer from "./components/footer";
-import { useEffect } from 'react';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectRoute/ProtectRoute";
+import Team from "./pages/nested/Team";
+import History from "./pages/nested/History";
 
-function App() {
-  useEffect(() => {
-    // Check if it is a miniapp
-    const isMiniprogram = window?.WindVane;
-    if (isMiniprogram) {
-      // Set the navbar
-      const params = {
-        title: "Javascript",
-        titleColor: '#000000',
-        barStyle: 'normal',
-        backgroundColor: '#FFFFFFFF', // rgba
-        hideBackButton: 'false',
-        theme: 'dark'
-      };
-      window?.WindVane.call('WVNavigationBar', 'update', params, function() {
-        // success
-      }, function(e: any) {
-        // failure
-      });
-    }
-  }, [])
+const App: React.FC = () => {
+  const isAuthenticated = true; // or logic for determining auth status
+
   return (
-    <div id="home-page">
-      <Header 
-      />
-      <InfoBody />
-      <Footer />
-    </div>
+    <Router>
+      {/* <nav>
+        <Link to="/"> Home </Link>
+        <Link to="/about"> About </Link>
+        <Link to="/profile/123"> Profile </Link>
+      </nav> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />}>
+          <Route path="team" element={<Team />} />
+          <Route path="history" element={<History />} />
+        </Route>
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/profile/:id" element={<Profile />} />
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
